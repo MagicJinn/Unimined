@@ -27,6 +27,7 @@ see [the api code](https://unimined.wagyourtail.xyz/unimined/%version%/api-docs/
 * biny (babric) (b1.7.3)
 * quilt (quiltmc) (1.18.2-present)
 * forgeBuiltinMCP (forge/mcp) (1.2.5-1.6)
+* forgeSearge (forge) (1.7-1.7.9)
 * parchment (parchment) (1.16.5-present)
 * spigotDev (spigot) (1.8-present)
 * unknownThingy

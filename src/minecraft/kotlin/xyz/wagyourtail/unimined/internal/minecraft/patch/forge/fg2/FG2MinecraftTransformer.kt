@@ -64,12 +64,14 @@ open class FG2MinecraftTransformer(project: Project, val parent: ForgeLikeMinecr
     override fun beforeMappingsResolve() {
         // get and add forge-src to mappings
         val forgeDep = parent.forge.dependencies.last()
+        val forgeVersion = forgeDep.version!!.substringAfter("${provider.forgeMCVersion}-")
         provider.mappings {
-            if (provider.minecraftData.mcVersionCompare(provider.version, "1.7.10") != -1 && !parent.customSearge) {
-                searge()
-            }
-            if (provider.minecraftData.mcVersionCompare(provider.version, "1.7") == -1 && !parent.customSearge) {
-                forgeBuiltinMCP(forgeDep.version!!.substringAfter("${provider.version}-"))
+            if (!parent.customSearge) {
+                when {
+                    provider.minecraftData.mcVersionCompare(provider.version, "1.7.10") != -1 -> searge()
+                    provider.minecraftData.mcVersionCompare(provider.version, "1.7") >= 0 -> forgeSearge(forgeVersion)
+                    else -> forgeBuiltinMCP(forgeVersion)
+                }
             }
         }
     }

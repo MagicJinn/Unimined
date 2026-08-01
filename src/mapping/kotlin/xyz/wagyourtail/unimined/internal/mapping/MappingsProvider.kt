@@ -663,6 +663,28 @@ open class MappingsProvider(project: Project, minecraft: MinecraftConfig, subKey
         })
     }
 
+    override fun forgeSearge(forgeVersion: String) {
+        unimined.minecraftForgeMaven()
+        val ext = if (minecraft.minecraftData.mcVersionCompare(minecraft.version, "1.6") < 0) "zip" else "jar"
+        val coords = MavenCoords(
+            "net.minecraftforge",
+            "forge",
+            "${minecraft.forgeMCVersion}-$forgeVersion",
+            "universal",
+            ext
+        )
+        val dep = project.dependencies.create(coords.toString())
+        mappings.dependencies.add(dep)
+        val lzmaFileName = "deobfuscation_data-${minecraft.version}.lzma"
+        addDependency("forgeSearge", MappingEntry(
+            ForgeLzmaSeargeContentProvider(mappings, dep, ext, lzmaFileName),
+            "forgeSearge-$forgeVersion"
+        ).apply {
+            provides("searge" to false)
+            mapNamespace("source" to "official", "target" to "searge")
+        })
+    }
+
     override fun parchment(
         mcVersion: String,
         version: String,
