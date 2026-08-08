@@ -139,6 +139,13 @@ abstract class MappingsConfig<T: MappingsConfig<T>>(val project: Project, val mi
     @JvmOverloads
     abstract fun forgeBuiltinMCP(version: String)
 
+    /**
+     * searge mappings bundled inside the forge universal jar (1.7-1.7.9).
+     * @since 1.4
+     */
+    @JvmOverloads
+    abstract fun forgeSearge(forgeVersion: String)
+
     @JvmOverloads
     abstract fun parchment(
         mcVersion: String = minecraft.version,
